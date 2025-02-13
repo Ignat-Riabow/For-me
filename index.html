@@ -13,13 +13,23 @@
     <h1>Калькулятор произведений и суммы чисел</h1>
     <form id="calculator">
         <div>
-            <input type="number" class="number" placeholder="Введите число">
-            <input type="number" class="number" placeholder="Введите число">
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <span class="row-product">0</span>
+        </div>
+        <div>
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <span class="row-product">0</span>
+        </div>
+        <div>
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
+            <span class="row-product">0</span>
         </div>
         <button type="button" onclick="addColumn()">Добавить столбец</button>
     </form>
-    <p>Произведение: <span id="product">0</span></p>
-    <p>Сумма: <span id="sum">0</span></p>
+    <p>Сумма произведений: <span id="sum">0</span></p>
 
     <script>
         function addColumn() {
@@ -30,38 +40,50 @@
             numberInput1.type = 'number';
             numberInput1.className = 'number';
             numberInput1.placeholder = 'Введите число';
-            numberInput1.oninput = calculateProduct;
+            numberInput1.oninput = function() { calculateRowProduct(this); };
             
             const numberInput2 = document.createElement('input');
             numberInput2.type = 'number';
             numberInput2.className = 'number';
             numberInput2.placeholder = 'Введите число';
-            numberInput2.oninput = calculateProduct;
+            numberInput2.oninput = function() { calculateRowProduct(this); };
+            
+            const rowProductSpan = document.createElement('span');
+            rowProductSpan.className = 'row-product';
+            rowProductSpan.textContent = '0';
             
             newDiv.appendChild(numberInput1);
             newDiv.appendChild(numberInput2);
+            newDiv.appendChild(rowProductSpan);
             calculatorForm.insertBefore(newDiv, calculatorForm.children[calculatorForm.children.length - 2]);
         }
 
-        function calculateProduct() {
+        function calculateRowProduct(input) {
+            const row = input.parentElement;
+            const inputs = row.querySelectorAll('.number');
             let product = 1;
-            const numbers = document.querySelectorAll('.number');
-            numbers.forEach(input => {
-                const value = parseFloat(input.value);
+            inputs.forEach(i => {
+                const value = parseFloat(i.value);
                 if (!isNaN(value)) {
                     product *= value;
                 }
             });
 
-            document.getElementById('product').textContent = product;
-            updateSum(product);
+            row.querySelector('.row-product').textContent = product;
+            updateSum();
         }
 
-        function updateSum(newProduct) {
-            const currentSum = parseFloat(document.getElementById('sum').textContent);
-            const updatedSum = currentSum + newProduct;
+        function updateSum() {
+            let sum = 0;
+            const rowProducts = document.querySelectorAll('.row-product');
+            rowProducts.forEach(span => {
+                const value = parseFloat(span.textContent);
+                if (!isNaN(value)) {
+                    sum += value;
+                }
+            });
 
-            document.getElementById('sum').textContent = updatedSum;
+            document.getElementById('sum').textContent = sum;
         }
     </script>
 </body>
