@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор произведений и суммы</title>
+</head>
+<body>
+    <h1>Калькулятор произведений и суммы чисел</h1>
+    <form id="calculator">
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <div>
+            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+        </div>
+        <!-- Добавьте больше полей по мере необходимости -->
+    </form>
+    <p>Произведение: <span id="product">0</span></p>
+    <p>Сумма: <span id="sum">0</span></p>
+
+    <script>
+        function calculateProduct() {
+            const number1 = parseFloat(document.getElementById('number1').value);
+            const number2 = parseFloat(document.getElementById('number2').value);
+            const product = number1 * number2;
+
+            document.getElementById('product').textContent = product;
+
+            updateSum(product);
+        }
+
+        function updateSum(newProduct) {
+            const currentSum = parseFloat(document.getElementById('sum').textContent);
+            const updatedSum = currentSum + newProduct;
+
+            document.getElementById('sum').textContent = updatedSum;
+        }
+    </script>
+</body>
+</html>
