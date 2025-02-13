@@ -3,47 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Калькулятор произведений и суммы</title>
+    <style>
+        #calculator div {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Калькулятор произведений и суммы чисел</h1>
     <form id="calculator">
         <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
+            <input type="number" class="number" placeholder="Введите число">
+            <input type="number" class="number" placeholder="Введите число">
         </div>
-        <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
-        </div>
-        <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
-        </div>
-        <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
-        </div>
-        <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
-        </div>
-        <div>
-            <input type="number" id="number1" placeholder="Введите число" oninput="calculateProduct()">
-            <input type="number" id="number2" placeholder="Введите число" oninput="calculateProduct()">
-        </div>
-        <!-- Добавьте больше полей по мере необходимости -->
+        <button type="button" onclick="addColumn()">Добавить столбец</button>
     </form>
     <p>Произведение: <span id="product">0</span></p>
     <p>Сумма: <span id="sum">0</span></p>
 
     <script>
+        function addColumn() {
+            const calculatorForm = document.getElementById('calculator');
+            const newDiv = document.createElement('div');
+            
+            const numberInput1 = document.createElement('input');
+            numberInput1.type = 'number';
+            numberInput1.className = 'number';
+            numberInput1.placeholder = 'Введите число';
+            numberInput1.oninput = calculateProduct;
+            
+            const numberInput2 = document.createElement('input');
+            numberInput2.type = 'number';
+            numberInput2.className = 'number';
+            numberInput2.placeholder = 'Введите число';
+            numberInput2.oninput = calculateProduct;
+            
+            newDiv.appendChild(numberInput1);
+            newDiv.appendChild(numberInput2);
+            calculatorForm.insertBefore(newDiv, calculatorForm.children[calculatorForm.children.length - 2]);
+        }
+
         function calculateProduct() {
-            const number1 = parseFloat(document.getElementById('number1').value);
-            const number2 = parseFloat(document.getElementById('number2').value);
-            const product = number1 * number2;
+            let product = 1;
+            const numbers = document.querySelectorAll('.number');
+            numbers.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    product *= value;
+                }
+            });
 
             document.getElementById('product').textContent = product;
-
             updateSum(product);
         }
 
