@@ -30,7 +30,7 @@
             margin-bottom: 10px;
         }
         #calculator input {
-            width: 45%;
+            width: 30%;
             padding: 10px;
             border: 1px solid #555;
             border-radius: 5px;
@@ -66,6 +66,12 @@
             font-weight: bold;
             color: #ffd700;
         }
+        .percentage {
+            width: 20%;
+            text-align: center;
+            font-weight: bold;
+            color: #ffd700;
+        }
     </style>
 </head>
 <body>
@@ -76,17 +82,9 @@
                 <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
                 <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
                 <span class="row-product">0</span>
+                <input type="number" class="percentage" placeholder="0" readonly>
             </div>
-            <div>
-                <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
-                <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
-                <span class="row-product">0</span>
-            </div>
-            <div>
-                <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
-                <input type="number" class="number" placeholder="Введите число" oninput="calculateRowProduct(this)">
-                <span class="row-product">0</span>
-            </div>
+            <!-- Повторите этот блок для других строк -->
             <button type="button" onclick="addColumn()">Добавить столбец</button>
         </form>
         <p>Сумма произведений: <span id="sum">0</span></p>
@@ -112,9 +110,16 @@
             rowProductSpan.className = 'row-product';
             rowProductSpan.textContent = '0';
             
+            const percentageInput = document.createElement('input');
+            percentageInput.type = 'number';
+            percentageInput.className = 'percentage';
+            percentageInput.placeholder = '0';
+            percentageInput.readOnly = true;
+            
             newDiv.appendChild(numberInput1);
             newDiv.appendChild(numberInput2);
             newDiv.appendChild(rowProductSpan);
+            newDiv.appendChild(percentageInput);
             calculatorForm.insertBefore(newDiv, calculatorForm.children[calculatorForm.children.length - 2]);
         }
 
@@ -131,6 +136,7 @@
 
             row.querySelector('.row-product').textContent = product;
             updateSum();
+            updatePercentage(input);
         }
 
         function updateSum() {
@@ -144,6 +150,16 @@
             });
 
             document.getElementById('sum').textContent = sum;
+        }
+
+        function updatePercentage(input) {
+            const row = input.parentElement;
+            const percentageInput = row.querySelector('.percentage');
+            const value = parseFloat(input.value);
+            if (!isNaN(value)) {
+                const percentage = value * 0.95;
+                percentageInput.value = percentage;
+            }
         }
     </script>
 </body>
