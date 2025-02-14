@@ -95,6 +95,34 @@
             color: #ffd700;
             margin: 0;
         }
+        #division-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #division-container h2 {
+            color: #ffd700;
+            margin: 0 0 10px 0;
+        }
+        #division-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+            background-color: #444;
+            color: #ffd700;
+            font-size: 16px;
+        }
+        #division-container p {
+            font-size: 16px;
+            color: #ffd700;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +142,12 @@
         <h2>95% от чисел</h2>
         <input type="number" id="input-value" placeholder="Введите число" oninput="calculatePercentage(this)">
         <p>Результат: <span id="percentage">0</span></p>
+    </div>
+    <div id="division-container">
+        <h2>Деление чисел</h2>
+        <input type="number" id="dividend" placeholder="Делимое" oninput="calculateDivision()">
+        <input type="number" id="divisor" placeholder="Делитель" oninput="calculateDivision()">
+        <p>Результат: <span id="division-result">0</span></p>
     </div>
     <script>
         function addColumn() {
@@ -178,6 +212,16 @@
             } else {
                 document.getElementById('percentage').textContent = 0;
             }
+        }
+
+        function calculateDivision() {
+            const dividend = parseFloat(document.getElementById('dividend').value);
+            const divisor = parseFloat(document.getElementById('divisor').value);
+            let result = 0;
+            if (!isNaN(dividend) && !isNaN(divisor) && divisor !== 0) {
+                result = dividend / divisor;
+            }
+            document.getElementById('division-result').textContent = result;
         }
     </script>
 </body>
